@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GemBites</title>
+</head>
+<body>
+    <nav>
+        <div id="title">  <img src="logo-removebg-preview.png" width="70%"> </div> 
+ 
+        <div id="link">
+        <div id="l1"><a href="index.html"> <p>Shop</p></a></div> 
+       <div id="l2">  <a href="#info"><p>About</p></a></div> 
+      <div id="l3"><a href="order.html"><p>Buy</p></a></div>  
+        </div>
+</nav>
+<br><br><br><br>
+<section id="order">
+    <h2>Order Your GemBites!</h2>
+    <form id="orderForm">
+        <label>Full Name:
+          <input type="text" name="name" required>
+        </label><br>
+    
+        <label>Phone Number:
+          <input type="tel" name="phone" required>
+        </label><br>
+    
+        <h3>Choose your flavours:</h3>
+        <label>Lemon:
+          <input type="number" name="lemonQty" min="0" value="0">
+        </label><br>
+        <label>Lime:
+          <input type="number" name="limeQty" min="0" value="0">
+        </label><br>
+        <label>Raspberry:
+          <input type="number" name="raspberryQty" min="0" value="0">
+        </label><br>
+    
+        <h3>Choose delivery method:</h3>
+        <label><input type="radio" name="delivery" value="delivery" required> NZ-Wide Delivery (extra $5)</label><br>
+        <label><input type="radio" name="delivery" value="pickup-auckland"> Pickup from school (Auckland only)</label><br>
+        <label><input type="radio" name="delivery" value="pickup-school"> In-school pickup (Marist College students only)</label><br>
+    
+        <button type="submit">Place Order</button>
+      </form>
+      <div id="orderSummary"></div>
+    </section>
+
+
+<style>
+     nav {background-color: #f38597;  display: flex; align-items: center; height: 65px;
+         margin: 0%; padding: 0%; position: fixed; top: 0%; left: 0%; width: 100%; }
+
+         nav::after { content: ""; position: absolute; bottom: -20px; width: 100%; height: 20px;  
+          /*this nav after section was taken from ai with changes made to it*/
+         background: linear-gradient(to bottom, #f38597, rgba(247, 223, 237, 0));  pointer-events: none; }
+
+    body {margin: 0%; padding: 0%; background-color: #f7dfed;} 
+     #title {align-items: left; padding-left: 2%; margin-right: 50%; }
+    #link {color: #abe0f8; font-size: 230%; display: flex;text-align: center;
+        margin-right: 8%;gap: 20%;margin-top: 0%; padding-right: 3%; }
+
+        nav a {text-decoration: none; color: inherit;}
+        nav a:hover{text-decoration: underline;}
+
+
+     #order { background-color: #f7dfed; 
+  padding: 20px;  max-width: 600px;
+  margin: auto; }
+
+label { display: block;  margin-top: 10px;}
+
+button { margin-top: 20px;
+  padding: 10px 20px; background-color: #f38597;
+  border: none; color: white;
+  font-size: 1em; cursor: pointer;}
+
+  h2 {text-align: center; margin-top: 7%; color: #f38597; font-size: 400%;}
+</style>
+
+<script>
+
+document.getElementById("orderForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+    
+      const name = this.name.value;
+      const phone = this.phone.value;
+      const lemonQty = parseInt(this.lemonQty.value);
+      const limeQty = parseInt(this.limeQty.value);
+      const raspberryQty = parseInt(this.raspberryQty.value);
+      const delivery = this.delivery.value;
+    
+      const totalQty = lemonQty + limeQty + raspberryQty;
+      const pricePerUnit = 4.49; 
+      let totalPrice = totalQty * pricePerUnit;
+      let deliveryNote = "";
+    
+      if (delivery === "delivery") {
+        totalPrice += 5;
+        deliveryNote = "Your order will be delivered anywhere in NZ. A $5 delivery fee has been added.";
+      } else if (delivery === "pickup-auckland") {
+        deliveryNote = "You can pick up your order from school. No delivery fee added.";
+      } else {
+        deliveryNote = "Your order will be delivered to your classroom. No delivery fee added.";
+      }
+    
+      // Show summary
+      const summary = `
+        <h3>Thanks ${name}!</h3>
+        <p>Phone: ${phone}</p>
+        <p>You ordered:</p>
+        <ul>
+          <li>Lemon: ${lemonQty}</li>
+          <li>Lime: ${limeQty}</li>
+          <li>Raspberry: ${raspberryQty}</li>
+        </ul>
+        <p>Total: $${totalPrice}</p>
+        <p>${deliveryNote}</p>
+        <p>You will receive a confirmation email soon.</p>
+      `;
+      document.getElementById("orderSummary").innerHTML = summary;
+    });
+</script>
+</body>
+</html>
